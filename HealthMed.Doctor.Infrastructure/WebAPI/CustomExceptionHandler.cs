@@ -1,47 +1,56 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 using static HealthMed.Core.Exceptions;
-using Microsoft.AspNetCore.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
+using System.Net;
+using System.Text.Json;
 
 namespace HealthMed.Infrastructure.WebAPI
 {
-    
-    public sealed class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IExceptionHandler
+
+    public sealed class CustomExceptionHandler
     {
-        public async ValueTask<bool> TryHandleAsync(HttpContent httpContext, Exception exception, CancellationToken cancellationToken)
+        private readonly RequestDelegate next;
+
+        public CustomExceptionHandler(RequestDelegate next)
         {
-            logger.LogError("Error Message: {exceptionMessage}, Ocurred at: {time}",
-                exception.Message, DateTime.UtcNow);
+            this.next = next;
+        }
 
-            int statusCode = GetStatusCodeFromException(exception);
+        public async Task Invoke(HttpContext context)
+        {
+            try
+            {
+                await next(context);
+            }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(context, ex);
+            }
+        }
 
-            /*ProblemDetails problemDetails = new()
+        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        {
+            var statusCode = context.Response.StatusCode;
+
+            statusCode = GetStatusCodeFromException(exception);
+
+            var problem = new ProblemDetails()
             {
                 Type = "https://httpstatuses.com/" + statusCode,
-                Title = exception.GetType().Name,
-                Detail = exception.Message,
+                Title = ((HttpStatusCode)statusCode).ToString(),
                 Status = statusCode,
-                Instance = httpContext.Request.Path
+                Detail = exception.Message ?? "An error occurred",
+                Instance = context.Request.Path
             };
 
-            problemDetails.Extensions.Add(new KeyValuePair<string, object?>("traceId", Activity.Current?.Id ?? httpContext.TraceIdentifier));
+            var json = JsonSerializer.Serialize(problem);
 
-            httpContext.Response.StatusCode = statusCode;
-
-            await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
-            */
-            return true;
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = statusCode;
+            return context.Response.WriteAsync(json);
         }
 
-        public ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        private int GetStatusCodeFromException(Exception exception) => exception switch
+        private static int GetStatusCodeFromException(Exception exception) => exception switch
         {
             InvalidLatitudeException => StatusCodes.Status400BadRequest,
             InvalidLongitudeException => StatusCodes.Status400BadRequest,

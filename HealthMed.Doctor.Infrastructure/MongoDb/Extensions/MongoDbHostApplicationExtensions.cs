@@ -1,9 +1,7 @@
 ﻿using HealthMed.Infrastructure.MongoDb.Configurations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System.Diagnostics.CodeAnalysis;
-using HealthMed.Infrastructure.MongoDb.Extensions;
 using HealthMed.Infrastructure.MongoDb.Serializers;
 
 namespace HealthMed.Infrastructure.MongoDb.Extensions

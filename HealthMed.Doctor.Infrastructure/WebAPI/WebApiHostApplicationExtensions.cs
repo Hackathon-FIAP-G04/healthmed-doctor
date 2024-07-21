@@ -12,9 +12,6 @@ namespace HealthMed.Infrastructure.WebAPI
     {
         public static IHostApplicationBuilder AddWebApi(this IHostApplicationBuilder builder)
         {
-            //builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-            builder.Services.AddProblemDetails();
-
             builder.Services.AddControllers();
 
             builder.Services.AddCors(options =>
@@ -45,7 +42,7 @@ namespace HealthMed.Infrastructure.WebAPI
                 app.UseSwaggerUI();
             }
 
-            //app.UseExceptionHandler();
+            app.UseMiddleware(typeof(CustomExceptionHandler));
             app.UseHttpsRedirection();
             app.MapControllers();
 
