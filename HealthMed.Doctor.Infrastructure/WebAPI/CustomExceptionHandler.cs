@@ -45,6 +45,11 @@ namespace HealthMed.Infrastructure.WebAPI
         {
             InvalidLatitudeException => StatusCodes.Status400BadRequest,
             InvalidLongitudeException => StatusCodes.Status400BadRequest,
+            InvalidNameException => StatusCodes.Status400BadRequest,
+            InvalidCRMException => StatusCodes.Status400BadRequest,
+            InvalidSpecialityException => StatusCodes.Status400BadRequest,
+            InvalidRatingValueException => StatusCodes.Status400BadRequest,
+            DoctorNotFoundException => StatusCodes.Status404NotFound,
 
             _ => StatusCodes.Status500InternalServerError,
         };

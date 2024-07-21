@@ -6,12 +6,12 @@ namespace HealthMed.Core.UseCases.SearchDoctorByLocation
     {
         public IEnumerable<DoctorLocationResponseItem> Doctors { get; set; }
 
-        public DoctorLocationResponse(IEnumerable<Doctor> doctors)
+        public DoctorLocationResponse(IEnumerable<Domain.Doctor> doctors)
         {
-            Doctors = doctors.Select(x => new DoctorLocationResponseItem(x.Id, x.CRM, x.Name, new LocationResponse(x.Location.Latitude, x.Location.Longitude))).ToList();
+            Doctors = doctors.Select(x => new DoctorLocationResponseItem(x.Id, x.CRM, x.Name, x.Rating.ToString(), new LocationResponse(x.Location.Latitude, x.Location.Longitude))).ToList();
         }
     }
     public record LocationResponse(double Latitude, double Longitude);
 
-    public record DoctorLocationResponseItem(Guid DoctorId, string CRM, string Name, LocationResponse Location);
+    public record DoctorLocationResponseItem(Guid DoctorId, string CRM, string Name, string rating, LocationResponse Location);
 }

@@ -1,6 +1,8 @@
-﻿using HealthMed.Core.UseCases.SearchDoctorByLocation;
+﻿using HealthMed.Core.UseCases.RegisterDoctor;
+using HealthMed.Core.UseCases.SearchDoctorByLocation;
+using HealthMed.Doctor.Core.UseCases.RateDoctor;
+using HealthMed.Doctor.Core.UseCases.UpdateDoctor;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System.Diagnostics.CodeAnalysis;
 
 namespace HealthMed.Infrastructure.IoC
@@ -11,6 +13,9 @@ namespace HealthMed.Infrastructure.IoC
         public static IServiceCollection AddUseCases(this IServiceCollection builder)
         {
             builder.AddScoped<ISearchDoctorByLocationUseCase, SearchDoctorByLocationUseCase>();
+            builder.AddScoped<IRegisterDoctorUseCase, RegisterDoctorUseCase>();
+            builder.AddScoped<IUpdateDoctorUseCase, UpdateDoctorUseCase>();
+            builder.AddScoped<IRateDoctorUseCase, RateDoctorUseCase>();
 
             return builder;
         }

@@ -29,7 +29,7 @@ namespace HealthMed.Infrastructure.MongoDb
             Client = new MongoClient(settings);
             Database = Client.GetDatabase(configuration.Database);
             
-            Database.GetCollection<Doctor>("doctors").Indexes.CreateOne(new CreateIndexModel<Doctor>(Builders<Doctor>.IndexKeys.Geo2DSphere(d => d.Location)));
+            Database.GetCollection<Core.Domain.Doctor>("doctors").Indexes.CreateOne(new CreateIndexModel<Core.Domain.Doctor>(Builders<Core.Domain.Doctor>.IndexKeys.Geo2DSphere(d => d.Location)));
         }
     }
 }

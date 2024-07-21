@@ -6,7 +6,7 @@ namespace HealthMed.Core.UseCases.RegisterDoctor
     {
         public Guid Id { get; set; }
 
-        public RegisterDoctorResponse(Doctor doctor)
+        public RegisterDoctorResponse(HealthMed.Core.Domain.Doctor doctor)
         {
             Id = doctor.Id;
             Name = doctor.Name;

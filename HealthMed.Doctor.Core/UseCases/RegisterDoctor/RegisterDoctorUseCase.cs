@@ -6,7 +6,7 @@ namespace HealthMed.Core.UseCases.RegisterDoctor
     {
         Task<RegisterDoctorResponse> RegisterDoctorAsync(RegisterDoctorRequest request);
     }
-    internal class RegisterDoctorUseCase : IRegisterDoctorUseCase
+    public class RegisterDoctorUseCase : IRegisterDoctorUseCase
     {
         private readonly IDoctorRepository _repository;
 
@@ -17,7 +17,7 @@ namespace HealthMed.Core.UseCases.RegisterDoctor
 
         public async Task<RegisterDoctorResponse> RegisterDoctorAsync(RegisterDoctorRequest request)
         {
-            var doctor = new Doctor(request.Name, request.CRM, request.Speciality, request.Location.latitude, request.Location.longitude);
+            var doctor = new Domain.Doctor(request.Name, request.CRM, request.Speciality, request.Location.latitude, request.Location.longitude);
 
             await _repository.Create(doctor);
 
