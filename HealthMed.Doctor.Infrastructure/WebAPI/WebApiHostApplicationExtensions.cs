@@ -30,21 +30,20 @@ namespace HealthMed.Infrastructure.WebAPI
             builder.Services.AddRepositories();
             builder.Services.AddUseCases();
             builder.Services.AddMongoDb(builder.Configuration);
+            builder.Services.AddHealthChecks();
 
             return builder;
         }
 
         public static WebApplication UseWebApi(this WebApplication app)
         {
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
 
             app.UseMiddleware(typeof(CustomExceptionHandler));
             app.UseHttpsRedirection();
             app.MapControllers();
+            app.MapHealthChecks("/hc");
 
             return app;
         }
