@@ -20,9 +20,9 @@ app.UseWebApi();
 app.MapGet("/doctors", 
     async (
         [FromServices] ISearchDoctorByLocationUseCase useCase, 
-        [FromQuery] double latitude, 
-        [FromQuery] double longitude, 
-        [FromQuery] double distance, 
+        [FromQuery] double? latitude, 
+        [FromQuery] double? longitude, 
+        [FromQuery] double? distance, 
         [FromQuery] string? speciality,
         [FromQuery] decimal? rating) =>
     {

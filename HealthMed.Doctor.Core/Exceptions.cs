@@ -11,5 +11,7 @@ namespace HealthMed.Core
         public class InvalidSpecialityException() : DomainException<InvalidSpecialityException>("Speciality is not valid");
         public class InvalidRatingValueException() : DomainException<InvalidRatingValueException>("The rating value must be between 0 and 5");
         public class DoctorNotFoundException() : DomainException<DoctorNotFoundException>("Requested doctor was not found");
+        public class NotAllLocationParametersInformedException() : DomainException<NotAllLocationParametersInformedException>("Either every location parameter must be provider or none");
+        public class NotParametersFoundForQueryException() : DomainException<NotParametersFoundForQueryException>("At least one query parameter is required");
     }
 }
