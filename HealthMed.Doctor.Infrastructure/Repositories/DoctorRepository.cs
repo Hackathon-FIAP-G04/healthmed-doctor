@@ -3,9 +3,11 @@ using HealthMed.Doctor.Core.Domain;
 using HealthMed.Infrastructure.MongoDb;
 using MongoDB.Driver;
 using MongoDB.Driver.GeoJsonObjectModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace HealthMed.Infrastructure.Repositories
 {
+    [ExcludeFromCodeCoverage]
     public class DoctorRepository : IDoctorRepository
     {
         private readonly IMongoCollection<HealthMed.Core.Domain.Doctor> _doctors;
