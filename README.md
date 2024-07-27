@@ -30,7 +30,7 @@ ___________________________________________________
 
 - [ healthmed-doctor](#healthmed-doctor)
 - [Índice](#índice)
-- [💡 Iburger-ordering](#-iburger-ordering)
+- [💡 Healthmed-doctor](#-healthmed-doctor)
 - [🔎 Coverage e Testes](#-coverage-e-testes)
 - [📕 Licença](#-licença)
 
